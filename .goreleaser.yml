@@ -1,0 +1,4 @@
+builds:
+  - main: .
+    goos:
+      - windows
