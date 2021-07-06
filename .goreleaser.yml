@@ -1,4 +1,6 @@
 builds:
   - main: .
+    binary: jwt-tool
     goos:
       - windows
+    
