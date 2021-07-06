@@ -20,14 +20,10 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "hugo",
-	Short: "Hugo is a very fast static site generator",
-	Long: `A Fast and Flexible Static Site Generator built with
-                love by spf13 and friends in Go.
-                Complete documentation is available at http://hugo.spf13.com`,
+	Use:   "jwt-tool",
+	Short: "JWT Tool is an easy way to create a JWT token to login with",
 	Run: func(cmd *cobra.Command, args []string) {
 		secretKey = viper.GetString("secretKey")
-		fmt.Printf("SecretKey = %s\n", secretKey)
 		token, err := jwtTool.CreateToken(userId, secretKey)
 		if err != nil {
 			log.Fatal(err.Error())
@@ -44,9 +40,9 @@ var rootCmd = &cobra.Command{
 func Execute() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.jwt-tool.yaml)")
 	rootCmd.PersistentFlags().StringVar(&userId, "userId", GenerateRandomUserId(), "The user id of the user you want to login")
-	rootCmd.PersistentFlags().StringVar(&secretKey, "secretKey", "secret", "The Identity Verification Secret taken from Web Assistant")
+	rootCmd.PersistentFlags().StringVar(&secretKey, "secretKey", "secret", "The Identity Verification Secret taken from Web Assistant. If blank, a value will be found in $HOME/.jwt-tool.yaml")
 	viper.BindPFlag("secretKey", rootCmd.PersistentFlags().Lookup("secretKey"))
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
