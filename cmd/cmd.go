@@ -42,7 +42,7 @@ func Execute() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.jwt-tool.yaml)")
 	rootCmd.PersistentFlags().StringVar(&userId, "userId", GenerateRandomUserId(), "The user id of the user you want to login")
-	rootCmd.PersistentFlags().StringVar(&secretKey, "secretKey", "secret", "The Identity Verification Secret taken from Web Assistant. If blank, a value will be found in $HOME/.jwt-tool.yaml")
+	rootCmd.PersistentFlags().StringVar(&secretKey, "secretKey", "secret", "The JWT Secret to sign the token with. If blank, a value will be found in $HOME/.jwt-tool.yaml")
 	viper.BindPFlag("secretKey", rootCmd.PersistentFlags().Lookup("secretKey"))
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
